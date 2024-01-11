@@ -39,7 +39,7 @@ def softmax(outputLayer): #returns the probabilities of each digit being the ans
     return np.exp(outputLayer)/total
 
 
-def forward(W1, B1, W2, B2, W3, B3, input): #still need to fix this lolsies
+def forward(W1, B1, W2, B2, W3, B3, input): 
     Z1 = np.zeros(32)
     A1 = np.zeros(32)
     for j in range (32):
@@ -67,8 +67,6 @@ def forward(W1, B1, W2, B2, W3, B3, input): #still need to fix this lolsies
     return Z1, A1, Z2, A2, Z3, A3
 
 #be careful of cost derivative; order matters. node - output
-#problem is rn is that we overflow?? and that produces an error in the derivative
-#try sigmoid??
 
 def backward(Z1,A1,Z2,A2,Z3,A3, input, output):
     dC0_dak3 = np.zeros(10)
@@ -201,10 +199,10 @@ def run_validation():
     correct = 0 #how many do we correctly identify
     global iW1, iB1, iW2, iB2, iW3, iB3
     for i in range (1, validationEpoch+1):
-        input,output = getVTestCase() #need to make a second get test case for validation data
+        input,output = getVTestCase()
         input = input.astype(float)
         input/=255.0
-        Z1, A1, Z2, A2, Z3, A3 = forward(iW1,iB1,iW2,iB2,iW3,iB3, input) #from 3b1b, z is before normalization, a is after
+        Z1, A1, Z2, A2, Z3, A3 = forward(iW1,iB1,iW2,iB2,iW3,iB3, input) #z is before normalization, a is after
         if output[getDigit(softmax(A3))] == 1:
             correct+=1
     print(correct)
